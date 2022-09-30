@@ -13,9 +13,11 @@ const flatten = (MMa) => {
 const Monad = (sideEffect) => {
   //of:: a -> Ma
   const of = (a) => {
-    const res = sideEffect ? sideEffect(a) : a;
+    if(sideEffect) {
+      sideEffect(a);
+    };
     return {
-      _get: () => res ? res : a,
+      _get: () => a,
       _isMonad: true,
       _of: of
     };
