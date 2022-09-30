@@ -1,6 +1,15 @@
 const { Monad, map, compose, flatten, monadicCompose } = require('./monad');
 
-const M = Monad(a => console.log('### ', a));
+const sideEffectReturn = a => a + 1;
+
+const M = Monad(a => {
+  console.log('### ', a);
+  if(a.isMonad) {
+    return map(a)(sideEffectReturn);
+  } else {
+    return sideEffectReturn(a);
+  }
+});
 
 const add2 = a => a + 2;
 
